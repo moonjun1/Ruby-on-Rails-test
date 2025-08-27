@@ -1,6 +1,9 @@
 # 🚀 Ruby 마크다운 블로그 - 완전한 기능 구현
 
 > **Ruby Sinatra 기반의 완전히 작동하는 마크다운 블로그 시스템**
+<img width="1774" height="1208" alt="스크린샷 2025-08-27 145721" src="https://github.com/user-attachments/assets/ee35ff49-ea09-44fb-a025-f7eebb38b86f" />
+<img width="1756" height="1194" alt="스크린샷 2025-08-27 145653" src="https://github.com/user-attachments/assets/0ee4e541-71e5-4bed-941a-a35fce963120" />
+<img width="1826" height="1227" alt="스크린샷 2025-08-27 145637" src="https://github.com/user-attachments/assets/334c45ba-8681-44bb-8ac2-fc0fa3a0423b" />
 
 ## ✨ 새롭게 추가된 기능들
 
