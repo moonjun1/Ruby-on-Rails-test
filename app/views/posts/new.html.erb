@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>✍️ 새 포스트 작성</h1>
+  <%= link_to "← 목록으로", posts_path, class: "btn btn-outline-secondary" %>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <%= render 'form', post: @post %>
+  </div>
+</div>
+
+<div class="mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-light">
+        <div class="card-header">
+          <h6 class="mb-0">📚 마크다운 문법 빠른 참조</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>기본 문법</h6>
+              <ul class="list-unstyled small">
+                <li><code># 제목 1</code></li>
+                <li><code>## 제목 2</code></li>
+                <li><code>**굵은 글씨**</code></li>
+                <li><code>*기울임 글씨*</code></li>
+                <li><code>`인라인 코드`</code></li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>고급 문법</h6>
+              <ul class="list-unstyled small">
+                <li><code>- 리스트 항목</code></li>
+                <li><code>&gt; 인용구</code></li>
+                <li><code>[링크](URL)</code></li>
+                <li><code>![이미지](URL)</code></li>
+                <li><code>```언어<br>코드블록<br>```</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+# 로그 파일
+*.log
+log/
+
+# 임시 파일
+*.tmp
+.DS_Store
+Thumbs.db
+
+# IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ruby 관련
+.bundle/
+vendor/bundle/
+
+# 기타 임시 파일
+*~
+.#*

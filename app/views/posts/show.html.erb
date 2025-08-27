@@ -1,0 +1,81 @@
+<div class="mb-4">
+  <%= link_to "← 📚 목록으로 돌아가기", posts_path, class: "btn btn-outline-secondary" %>
+</div>
+
+<article class="mb-4">
+  <header class="mb-4">
+    <h1 class="display-4"><%= @post.title %></h1>
+    <div class="d-flex justify-content-between align-items-center text-muted border-bottom pb-3">
+      <div>
+        <small>
+          <i class="bi bi-calendar"></i>
+          작성일: <%= @post.created_at.strftime("%Y년 %m월 %d일") %>
+        </small>
+        <span class="mx-2">•</span>
+        <small>
+          <i class="bi bi-clock"></i>
+          읽는 시간: <%= @post.reading_time %>
+        </small>
+        <% unless @post.published? %>
+          <span class="badge bg-warning ms-2">📝 초안</span>
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  <div class="post-content">
+    <%= @post.markdown_content %>
+  </div>
+</article>
+
+<div class="d-flex gap-2 border-top pt-3">
+  <%= link_to "✏️ 수정", edit_post_path(@post), class: "btn btn-outline-primary" %>
+  
+  <% if @post.published? %>
+    <%= link_to "📝 비공개로 변경", publish_post_path(@post), method: :patch,
+                class: "btn btn-outline-warning" %>
+  <% else %>
+    <%= link_to "🚀 발행하기", publish_post_path(@post), method: :patch,
+                class: "btn btn-success" %>
+  <% end %>
+  
+  <%= link_to "🗑️ 삭제", @post, method: :delete, 
+              data: { 
+                confirm: "정말로 이 포스트를 삭제하시겠습니까?\n\n제목: #{@post.title}\n\n이 작업은 되돌릴 수 없습니다." 
+              }, 
+              class: "btn btn-outline-danger" %>
+</div>
+
+<!-- 관련 정보 섹션 -->
+<div class="mt-5 pt-4 border-top">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h6 class="card-title">📊 포스트 정보</h6>
+          <ul class="list-unstyled mb-0 small">
+            <li><strong>단어 수:</strong> <%= @post.content.split.size %>개</li>
+            <li><strong>글자 수:</strong> <%= @post.content.length %>자</li>
+            <li><strong>상태:</strong> <%= @post.published? ? '발행됨' : '초안' %></li>
+            <li><strong>최종 수정:</strong> <%= @post.updated_at.strftime("%Y-%m-%d %H:%M") %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h6 class="card-title">🚀 빠른 액션</h6>
+          <div class="d-grid gap-2">
+            <%= link_to "📋 복사해서 새 포스트", new_post_path(template: @post.id), class: "btn btn-sm btn-outline-secondary" %>
+            <% if @post.published? %>
+              <%= link_to "🔗 공유 링크 복사", "#", class: "btn btn-sm btn-outline-info", 
+                          onclick: "navigator.clipboard.writeText(window.location.href); alert('링크가 클립보드에 복사되었습니다!'); return false;" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

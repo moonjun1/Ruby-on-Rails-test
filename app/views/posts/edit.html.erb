@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>✏️ 포스트 수정</h1>
+  <div>
+    <%= link_to "👀 미리보기", @post, class: "btn btn-outline-info me-2" %>
+    <%= link_to "← 뒤로가기", @post, class: "btn btn-outline-secondary" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <%= render 'form', post: @post %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="mb-0">📊 포스트 정보</h6>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mb-0 small">
+          <li><strong>생성일:</strong><br><%= @post.created_at.strftime("%Y-%m-%d %H:%M") %></li>
+          <li class="mt-2"><strong>최종 수정:</strong><br><%= @post.updated_at.strftime("%Y-%m-%d %H:%M") %></li>
+          <li class="mt-2"><strong>현재 상태:</strong><br>
+            <span class="badge <%= @post.published? ? 'bg-success' : 'bg-warning text-dark' %>">
+              <%= @post.published? ? '🚀 발행됨' : '📝 초안' %>
+            </span>
+          </li>
+          <li class="mt-2"><strong>단어 수:</strong> <%= @post.content.split.size %>개</li>
+          <li class="mt-1"><strong>예상 읽기 시간:</strong> <%= @post.reading_time %></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="card mt-3">
+      <div class="card-header">
+        <h6 class="mb-0">🚀 빠른 액션</h6>
+      </div>
+      <div class="card-body">
+        <div class="d-grid gap-2">
+          <% if @post.published? %>
+            <%= link_to "📝 비공개로 변경", publish_post_path(@post), method: :patch,
+                        class: "btn btn-outline-warning btn-sm" %>
+          <% else %>
+            <%= link_to "🚀 발행하기", publish_post_path(@post), method: :patch,
+                        class: "btn btn-success btn-sm" %>
+          <% end %>
+          
+          <%= link_to "🗑️ 포스트 삭제", @post, method: :delete,
+                      data: { 
+                        confirm: "정말로 삭제하시겠습니까?\n\n#{@post.title}\n\n이 작업은 되돌릴 수 없습니다." 
+                      },
+                      class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

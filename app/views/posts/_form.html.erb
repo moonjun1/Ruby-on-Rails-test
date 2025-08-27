@@ -1,0 +1,118 @@
+<%= form_with(model: post, local: true, class: "needs-validation", novalidate: true) do |form| %>
+  <% if post.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>⚠️ <%= pluralize(post.errors.count, "개의 오류") %>가 발생했습니다:</h4>
+      <ul class="mb-0">
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, "📝 제목", class: "form-label" %>
+    <%= form.text_field :title, 
+        class: "form-control #{'is-invalid' if post.errors[:title].any?}", 
+        placeholder: "포스트 제목을 입력하세요...",
+        required: true %>
+    <% if post.errors[:title].any? %>
+      <div class="invalid-feedback">
+        <%= post.errors[:title].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, "📄 내용 (마크다운)", class: "form-label" %>
+    <%= form.text_area :content, 
+        class: "form-control #{'is-invalid' if post.errors[:content].any?}", 
+        rows: 20, 
+        placeholder: "마크다운 문법을 사용해서 내용을 작성하세요...\n\n예시:\n# 제목\n## 소제목\n\n**굵은 글씨**와 *기울임* 글씨\n\n- 리스트 항목 1\n- 리스트 항목 2\n\n```ruby\ndef hello\n  puts 'Hello, World!'\nend\n```\n\n> 인용구입니다.\n\n[링크](https://example.com)",
+        required: true %>
+    <% if post.errors[:content].any? %>
+      <div class="invalid-feedback">
+        <%= post.errors[:content].first %>
+      </div>
+    <% end %>
+    <div class="form-text">
+      💡 <strong>마크다운 문법 가이드:</strong>
+      <code>#</code> 제목, <code>**굵게**</code> 굵은글씨, <code>*기울임*</code> 기울임글씨, 
+      <code>```언어</code> 코드블록, <code>&gt;</code> 인용구, <code>- </code> 리스트
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="form-check">
+        <%= form.check_box :published, class: "form-check-input" %>
+        <%= form.label :published, "🚀 바로 발행하기", class: "form-check-label" %>
+        <div class="form-text">
+          체크하지 않으면 초안으로 저장됩니다.
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card bg-light">
+        <div class="card-body py-2">
+          <small class="text-muted">
+            <strong>💡 팁:</strong> 초안으로 저장한 후 미리보기를 확인해보세요!
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= form.submit post.persisted? ? "💾 업데이트" : "💾 저장하기", 
+        class: "btn btn-primary btn-lg" %>
+    
+    <% if post.persisted? && !post.published? %>
+      <%= link_to "👀 미리보기", post_path(post, preview: true), 
+          class: "btn btn-outline-info", target: "_blank" %>
+    <% end %>
+    
+    <%= link_to "❌ 취소", post.persisted? ? post : posts_path, 
+        class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
+
+<script>
+// 자동 저장 기능 (선택사항)
+let autoSaveTimer;
+const titleField = document.querySelector('#post_title');
+const contentField = document.querySelector('#post_content');
+
+function showAutoSaveStatus(message) {
+  // 간단한 알림 표시
+  const existingAlert = document.querySelector('.auto-save-alert');
+  if (existingAlert) existingAlert.remove();
+  
+  const alert = document.createElement('div');
+  alert.className = 'alert alert-info alert-dismissible fade show auto-save-alert position-fixed';
+  alert.style = 'top: 20px; right: 20px; z-index: 9999; max-width: 300px;';
+  alert.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+  document.body.appendChild(alert);
+  
+  setTimeout(() => {
+    if (alert.parentNode) alert.parentNode.removeChild(alert);
+  }, 3000);
+}
+
+// 폼 유효성 검사
+(function() {
+  'use strict';
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.prototype.slice.call(forms).forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        showAutoSaveStatus('⚠️ 필수 항목을 확인해주세요!');
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>

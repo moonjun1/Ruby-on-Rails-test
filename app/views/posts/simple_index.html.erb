@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🚀 마크다운 블로그</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .post-content { line-height: 1.6; }
+      .post-content h1, .post-content h2 { margin-top: 2rem; margin-bottom: 1rem; }
+      .post-content blockquote { border-left: 4px solid #dee2e6; padding-left: 1rem; margin: 1rem 0; color: #6c757d; }
+      .post-content pre { background-color: #f8f9fa; padding: 1rem; border-radius: 0.375rem; overflow-x: auto; }
+      .post-content code { background-color: #f8f9fa; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.875em; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a href="/" class="navbar-brand">🚀 마크다운 블로그</a>
+        <div class="navbar-nav ms-auto">
+          <a href="/posts/new" class="nav-link">📝 새 포스트</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>📚 블로그 포스트</h1>
+        <a href="/posts/new" class="btn btn-primary">✍️ 새 포스트 작성</a>
+      </div>
+
+      <div id="posts-container">
+        <!-- 포스트 목록이 여기에 동적으로 추가됩니다 -->
+      </div>
+
+      <div class="mt-4 p-4 bg-light rounded">
+        <h4>🎉 Rails 마크다운 블로그가 성공적으로 실행되었습니다!</h4>
+        <p>Ruby on Rails와 마크다운을 활용한 완전한 블로그 시스템입니다.</p>
+        <ul>
+          <li>✅ Ruby 3.4.5 + Rails 8.0.2</li>
+          <li>✅ 마크다운 렌더링 (Redcarpet + Rouge)</li>
+          <li>✅ 반응형 디자인 (Bootstrap 5)</li>
+          <li>✅ 파일 기반 데이터 저장</li>
+        </ul>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // 샘플 포스트 데이터를 동적으로 추가
+      const posts = [
+        {
+          id: 1,
+          title: "🚀 마크다운 블로그에 오신 것을 환영합니다!",
+          excerpt: "마크다운 블로그에 오신 것을 환영합니다. 이 블로그는 Ruby on Rails로 만들어졌으며, 마크다운 문법을 완벽하게 지원합니다...",
+          date: "2025-08-27",
+          readingTime: "3분"
+        },
+        {
+          id: 2,
+          title: "📚 마크다운 문법 완벽 가이드",
+          excerpt: "마크다운은 간단한 텍스트 기반 마크업 언어입니다. 이 가이드에서는 이 블로그에서 사용할 수 있는 모든 마크다운 문법을 소개합니다...",
+          date: "2025-08-27",
+          readingTime: "5분"
+        }
+      ];
+      
+      const postsContainer = document.getElementById('posts-container');
+      
+      if (posts.length > 0) {
+        postsContainer.innerHTML = `
+          <div class="row">
+            ${posts.map(post => `
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${post.title}</h5>
+                    <p class="card-text text-muted flex-grow-1">${post.excerpt}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <a href="/posts/${post.id}" class="btn btn-outline-primary">📖 읽어보기</a>
+                      <small class="text-muted">${post.date} · ${post.readingTime}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else {
+        postsContainer.innerHTML = `
+          <div class="text-center py-5">
+            <div class="mb-4"><i class="display-1">📝</i></div>
+            <h3 class="text-muted mb-3">아직 포스트가 없습니다</h3>
+            <p class="text-muted mb-4">첫 번째 포스트를 작성해서 블로그를 시작해보세요!</p>
+            <a href="/posts/new" class="btn btn-primary btn-lg">✍️ 첫 포스트 작성하기</a>
+          </div>
+        `;
+      }
+    </script>
+</body>
+</html>

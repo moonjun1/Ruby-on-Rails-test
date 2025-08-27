@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>📚 블로그 포스트</h1>
+  <%= link_to "✍️ 새 포스트 작성", new_post_path, class: "btn btn-primary" %>
+</div>
+
+<% if @posts.any? %>
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><%= post.title %></h5>
+            <p class="card-text text-muted flex-grow-1">
+              <%= post.excerpt %>
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <%= link_to "📖 읽어보기", post, class: "btn btn-outline-primary" %>
+              <small class="text-muted">
+                <%= post.created_at.strftime("%Y-%m-%d") %> · <%= post.reading_time %>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-5">
+    <div class="mb-4">
+      <i class="display-1">📝</i>
+    </div>
+    <h3 class="text-muted mb-3">아직 포스트가 없습니다</h3>
+    <p class="text-muted mb-4">첫 번째 포스트를 작성해서 블로그를 시작해보세요!</p>
+    <%= link_to "✍️ 첫 포스트 작성하기", new_post_path, class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+
+<% if @draft_posts&.any? %>
+  <div class="mt-5">
+    <h3>📝 초안 포스트</h3>
+    <div class="row">
+      <% @draft_posts.each do |post| %>
+        <div class="col-md-6 mb-3">
+          <div class="card border-warning">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h6 class="card-title mb-0"><%= post.title %></h6>
+                <span class="badge bg-warning text-dark">초안</span>
+              </div>
+              <p class="card-text text-muted small">
+                <%= post.excerpt(100) %>
+              </p>
+              <div class="d-flex gap-2">
+                <%= link_to "편집", edit_post_path(post), class: "btn btn-sm btn-outline-primary" %>
+                <%= link_to "미리보기", post_path(post, preview: true), class: "btn btn-sm btn-outline-secondary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
